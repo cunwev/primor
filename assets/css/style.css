@@ -1,0 +1,297 @@
+@charset "utf-8";
+
+/* ----- TIPOGRAFIAS ----- */
+
+@import url('https://fonts.googleapis.com/css2?family=Muli:wght@300&display=swap');
+
+@font-face {
+    font-family: 'Muli';
+    src: url('https://fonts.googleapis.com/css2?family=Muli:wght@300;400;700&display=swap') format('woff2');
+}
+* {
+    font-family: 'Muli', sans-serif;
+}
+
+.page-title,
+.cart-subtitle,
+.cart-item-price,
+.cart-item-categoria,
+.cart-item,
+.cart-subtotal,
+.cart-total {
+    text-align: start;
+    letter-spacing: normal;
+}
+.header-menu-link {
+    font-size: 12px !important;
+    line-height: 19px !important;
+    font-weight: 700;
+}
+
+.page-title {
+    font-size: 30px;
+    line-height: 48px;
+}
+
+.cart-subtitle {
+    font-size: 25px;
+    line-height: 40px;
+}
+
+.cart-item-price {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: bold;
+}
+
+.cart-item-categoria {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: bold;
+}
+
+.cart-item {
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.cart-subtotal {
+    font-size: 16px;
+    line-height: 25px;
+    font-weight: 600;
+}
+
+.cart-total {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 600;
+}
+
+.cart-button-cantidad {
+    background: none;
+    border: none;
+    font-size: 20px;
+}
+
+.cart-banner-text-a {
+    font-size: 20px;
+    line-height: 32px;
+}
+
+.cart-banner-text-b {
+    font-size: 12px;
+    line-height: 13px;
+}
+
+.product-price {
+    font-size: 22px;
+    line-height: 22px;
+    font-weight: 700;
+}
+
+.product-categoria {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 700;
+}
+
+.product-name {
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.carta-title {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 700;
+}
+.simple-title {
+    font-size: 22px !important;
+    line-height: 32px;
+    font-weight: 600;
+}
+
+
+
+/* ----- HEADER ----- */
+
+/* @media only screen and (max-width: 900px) {
+
+    .display-mode-off {
+        visibility: hidden !important
+    }
+} */
+
+.searchbar {
+    border-radius: 30px !important;
+    width: 906px !important;
+    max-height: 50% !important;
+    background-image: url('../icons/searchbar_lupa.svg') !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 23px !important;
+}
+
+.searchbar-mini {
+    border-radius: 30px !important;
+    width: 480px !important;
+    max-height: 50% !important;
+    background-image: url('../icons/searchbar_lupa.svg') !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 23px !important;
+}
+
+
+.contador-cesta {
+    position: absolute;
+    color: white;
+    font-weight: semi-bold;
+    background-color: red;
+    text-align: center;
+    transform: translateX(90%) translateY(-150%);
+    border-radius: 100px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 14px;
+}
+
+.logo {
+    width: 180px; height: 50px;
+    margin-left: 12px;
+    margin-right: 12px;
+     background-size:cover; 
+     background-position:center;
+     background-repeat:no-repeat !important;
+}
+/* ----- BANNER PRIMERO ----- */
+
+@media only screen and (max-width: 600px) {
+
+    .mgreset {
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+        margin-top: 20px !important;
+    }
+
+    .mgbottom {
+        margin-bottom: -80px !important;
+    }
+
+}
+
+.mgright {
+    margin-right: 12px;
+}
+
+.mgleft {
+    margin-left: 12px;
+}
+
+.banner-a {
+    height: 309px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+/* ----- GENERAL ----- */
+
+/* Solo tiene formato en hover */
+.btn:hover {
+    border-radius: 0;
+    border-bottom: 2px solid #FF2121;
+    padding-bottom: 3px;
+}
+
+.btn-a {
+    padding: 4px 32px 4px 32px;
+    background-color: white;
+    color: black;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+    text-decoration: solid;
+}
+    .btn-a:hover {
+        background-color: rgb(0, 0, 0);
+        color: white;
+    }
+
+.btn-b {
+    padding: 4px 32px 4px 32px;
+    background-color: white;
+    color: black;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+    text-decoration: solid;
+}
+    .btn-b:hover {
+        background-color: white;
+        color: black;
+    }
+
+.btn-c {
+    padding: 4px 32px 4px 32px;
+    background-color: #FF2121;
+    color: white;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+    text-decoration: solid;
+    border: 2px solid #FF2121;
+}
+    .btn-c:hover {
+        background-color: white;
+        color: #FF2121;
+    }
+
+
+/* ----- SCROLLBAR ----- */
+
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: black;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+    -webkit-box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: black;
+    height: 20px;
+}
+
+* {
+    scrollbar-color: black #f5f5f5;
+    /* Para navegadores basados en Firefox */
+    scrollbar-width: thin;
+    /* Para navegadores basados en Firefox */
+}
+
+
+@media only screen and (max-width: 900px) {
+
+    .display-mode-off {
+        visibility: hidden !important;
+        position: absolute !important;
+    }
+    .margin-mode-off {
+        margin: 0px !important;
+    }
+    .padding-reset-searchbar {
+        padding: 0px !important;
+    }
+}
+@media only screen and (min-width: 900px) {
+
+    .display-mode-off-dos {
+        visibility: hidden !important;
+        position: absolute !important;
+    }
+}
+
+body {
+    overflow-x: hidden;
+}
