@@ -5,9 +5,6 @@ class Pedido
     protected $cantidad = 1;
     public $categoria;
 
-    // public function __construct($producto){
-    //     $this->producto = $producto;
-    // }
     public function __construct($producto)
     {
         $this->producto = $producto;

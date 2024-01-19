@@ -14,7 +14,7 @@
 
   <!----------------------------------------------------------------------------------------------------->
   <div class="my-4">
-  <h2 class="p-0 my-3 fw-semibold text-center">Crear una cuenta</h2> <!-- FONT SIZE 20 -->
+  <h2 class="p-0 my-3 page-title text-center">Crear una cuenta</h2> <!-- FONT SIZE 20 -->
   </div>
     <div class="d-flex col-12 container-fluid justify-content-center align-items-center">
       <form action="?controller=user&action=registrar" method="post">

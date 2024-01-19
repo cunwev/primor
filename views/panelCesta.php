@@ -73,9 +73,15 @@
               <?php } else { ?>
                 <form class="p-2" action="<?= url . '?controller=cesta&action=finalizar' ?>" method="post">
                 <?php } ?>
-                <input class="input-text-descuento" type="text" placeholder="Introducir código de descuento"/>
+                <input class="input-text-descuento" type="text" placeholder="Introducir código de descuento" />
                 <button type="submit" class="fw-semibold btn-a btn-cart-aplicar p-0">APLICAR</button>
-                <input type="hidden" name="precioFinal" value="<?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) * 1.10, 2) ?>">
+                <input type="hidden" name="precioFinal" value="<?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']), 2) ?>">
+                <div class="text-center my-4">
+                  <a href="#" class="btn-product-size">Nada</a>
+                  <a href="#" class="btn-product-size">5% (<?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) * 0.05, 2) ?> €)</a>
+                  <a href="#" class="btn-product-size">10% (<?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) * 0.10, 2) ?> €)</a>
+                  <a href="#" class="btn-product-size">15% (<?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) * 0.15, 2) ?> €)</a>
+                </div>
                 <button type="submit" name="precio" id="pass" class="fw-semibold btn-c btn-cart-tramitar">TRAMITAR PEDIDO (<?= count($_SESSION['addproducto']); ?> artículos)</button>
                 </form>
 
@@ -156,9 +162,9 @@
       } ?>
     </div>
   </div>
-  </body>
-  <!-------------------------------------------------------------------------------->
+</body>
+<!-------------------------------------------------------------------------------->
 
-  <?php include_once "views/footer.php" ?>
+<?php include_once "views/footer.php" ?>
 
 </html>

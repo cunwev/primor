@@ -129,5 +129,7 @@ class UsuarioDAO
             return 2; // Error al registrar en CREDENCIALES
         }
     }
+
+    
 }
 ?>

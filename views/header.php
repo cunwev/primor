@@ -62,7 +62,7 @@ ob_start(); // Place ob_start() at the very beginning of the script to avoid hea
 </nav>
 
 
-<div class="bg-black d-flex justify-content-center align-items-center display-mode-off">
+<div class="bg-black d-flex justify-content-center align-items-center display-mode-off" ><!--style="position: fixed !important; z-index: 1000 !important; width: 100%"-->
   <nav class="d-flex justify-content-center align-items-center navbar navbar-expand-lg bg-black pt-4">
     <div class="container-xl padding-reset-searchbar" style="padding-right: 12px; padding-left:0px">
       <a class="nav-link text-white" href="http://localhost/PRIMOR/index.php?controller=producto">

@@ -4,6 +4,46 @@
 <head>
   <title>Primor</title>
   <?php include_once "views/meta.php" ?>
+  <style>
+    .rating {
+      display: flex;
+    }
+
+    .rating input {
+      display: none;
+    }
+
+    .rating label {
+      cursor: pointer;
+      width: 25px;
+      height: 25px;
+      background-image: url('assets/icons/estrella_no.svg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .rating input:checked~label {
+      background-image: url('assets/icons/estrella_si.svg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Estilo para la ventana con scroll */
+    .ventana-scroll {
+  height: 200px;
+  overflow-y: auto; /* Cambiado de scroll a auto */
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Ocultar la barra de desplazamiento en navegadores webkit (como Chrome y Safari) */
+.ventana-scroll::-webkit-scrollbar {
+  width: 0; /* Ancho de la barra de desplazamiento a cero */
+}
+  </style>
 </head>
 
 <body>
@@ -11,6 +51,68 @@
   <header>
     <?php include_once "views/header.php" ?>
   </header>
+
+
+  <div class="container-xl mx-52 p-0 mt-5 mb-4 margin-mode-off">
+    <h2 class="page-title">Deja tu reseña</h2>
+    <div class="row m-0 p-0">
+      <div class="col-md-8 m-0 p-0">
+        <div class="mgright mgreset mgbottom" style="height: 450px">
+          <div class="ventana-scroll" style="height: 100%">
+            <!-- Contenido de la ventana con scroll -->
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+            <!-- Agrega más contenido aquí -->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 m-0 p-0">
+        <div class="mgleft mgreset p-2" style="height: 400px !important;">
+          <form action="procesar_formulario.php" method="post">
+            <label class="label-text-login w-100">Título *</label>
+            <input type="text" placeholder="Introduce un título" maxlength="45" style="width:100%;" required>
+            <br><br>
+            <label class="label-text-login w-100">Comentario *</label>
+            <textarea placeholder="Introduce aquí tu reseña" cols="6" rows="1" maxlength="300" style="resize: none; width:100%; height:50%;" required></textarea>
+            <br><br>
+            <label class="label-text-login w-100">Valoración *</label>
+            <div class="rating d-flex flex-row-reverse justify-content-end">
+              <input type="radio" id="estrella5" name="puntuacion" value="5">
+              <label for="estrella5"></label>
+              <input type="radio" id="estrella4" name="puntuacion" value="4">
+              <label for="estrella4"></label>
+              <input type="radio" id="estrella3" name="puntuacion" value="3">
+              <label for="estrella3"></label>
+              <input type="radio" id="estrella2" name="puntuacion" value="2">
+              <label for="estrella2"></label>
+              <input type="radio" id="estrella1" name="puntuacion" value="1" checked>
+              <label for="estrella1"></label>
+            </div>
+            <br>
+            <input type="submit" value="Enviar reseña">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!----------------------------------------------------------------------------------------------------->
 
@@ -180,8 +282,8 @@
       } ?>
     </div>
   </div>
-  </body>
-  
-  <?php include_once "views/footer.php" ?>
+</body>
+
+<?php include_once "views/footer.php" ?>
 
 </html>
