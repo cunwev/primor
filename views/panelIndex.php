@@ -33,16 +33,18 @@
 
     /* Estilo para la ventana con scroll */
     .ventana-scroll {
-  height: 200px;
-  overflow-y: auto; /* Cambiado de scroll a auto */
-  border: 1px solid #ccc;
-  padding: 10px;
-}
+      height: 200px;
+      overflow-y: auto;
+      /* Cambiado de scroll a auto */
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
 
-/* Ocultar la barra de desplazamiento en navegadores webkit (como Chrome y Safari) */
-.ventana-scroll::-webkit-scrollbar {
-  width: 0; /* Ancho de la barra de desplazamiento a cero */
-}
+    /* Ocultar la barra de desplazamiento en navegadores webkit (como Chrome y Safari) */
+    .ventana-scroll::-webkit-scrollbar {
+      width: 0;
+      /* Ancho de la barra de desplazamiento a cero */
+    }
   </style>
 </head>
 
@@ -60,33 +62,18 @@
         <div class="mgright mgreset mgbottom" style="height: 450px">
           <div class="ventana-scroll" style="height: 100%">
             <!-- Contenido de la ventana con scroll -->
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-            <!-- Agrega más contenido aquí -->
+            <section id="nose">
+
+            </section>
           </div>
         </div>
       </div>
 
+
+
       <div class="col-md-4 m-0 p-0">
         <div class="mgleft mgreset p-2" style="height: 400px !important;">
-          <form action="procesar_formulario.php" method="post">
+          <form id="resenaForm">
             <label class="label-text-login w-100">Título *</label>
             <input type="text" placeholder="Introduce un título" maxlength="45" style="width:100%;" required>
             <br><br>
@@ -107,7 +94,8 @@
               <label for="estrella1"></label>
             </div>
             <br>
-            <input type="submit" value="Enviar reseña">
+            <button type="button" class="boton_comentario" onclick="agregarComentario()">Agrega tu comentario!</button>
+          </form>
           </form>
         </div>
       </div>
@@ -265,7 +253,7 @@
             </div>
             <div class="sub-container-product">
               <!-- Da el nombre de la categoria en mayusculas y el nombre del producto -->
-              <p class="product-categoria"><?= strtoupper($product->getNombreCategoria()) ?></p>
+              <p class="product-categoria"><?=strtoupper($product->getNombreCategoria())?></p>
               <p class="product-name"><?= $product->getnombre() ?></p>
             </div>
             <div class="text-center my-4">
@@ -282,6 +270,7 @@
       } ?>
     </div>
   </div>
+  <script src="/primor/assets/js/mostrarcomentarios.js"></script>
 </body>
 
 <?php include_once "views/footer.php" ?>

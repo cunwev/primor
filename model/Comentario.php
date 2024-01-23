@@ -2,16 +2,15 @@
 
 class Comentario{
     private $comentario_id;
-    private $user_id;
+    private $nombre;
     private $titulo;
     private $comentario;
     private $valoracion;
 
     // Define the constructor of the class
-    public function __construct($comentario_id, $user_id, $titulo, $comentario, $valoracion)
-    {
+    public function __construct($comentario_id, $nombre, $titulo, $comentario, $valoracion){
         $this->comentario_id = $comentario_id;
-        $this->user_id = $user_id;
+        $this->nombre = $nombre;
         $this->titulo = $titulo;
         $this->comentario = $comentario;
         $this->valoracion = $valoracion;
@@ -35,19 +34,19 @@ class Comentario{
     }
 
     /**
-     * Get the value of user_id
+     * Get the value of nombre
      */
-    public function getUserId()
+    public function getNombre()
     {
-        return $this->user_id;
+        return $this->nombre;
     }
 
     /**
-     * Set the value of user_id
+     * Set the value of nombre
      */
-    public function setUserId($user_id): self
+    public function setNombre($nombre): self
     {
-        $this->user_id = $user_id;
+        $this->nombre = $nombre;
         return $this;
     }
 
