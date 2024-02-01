@@ -11,8 +11,20 @@
 </header>
 
 <body>
-    <div class="container-xl">
-
+    
+<div class="text-center my-5">
+<form id="categoryFilterForm">
+<h2 class="carta-title">Filtrar por Categoría</h2>
+    <label for="categoryFilter">Selecciona una categoría:</label>
+    <select id="categoryFilter" name="categoryFilter">
+        <option value="all">Todas</option>
+        <option value="tendencias">Tendencias</option>
+        <option value="mer_a_versailles">Mer À Versailles</option>
+        <option value="ecresant_des_feuilles">Ecresant Des Feuilles</option>
+    </select>
+</form>
+</div>
+        <div class="container-xl tendencias">
         <div class="text-center my-5">
             <h2 class="carta-title">TENDENCIAS</h2>
             <p>Una exquisita colección de los platos que están en boca de todos.<br>Conoce las últimas tendencias gatronómicas.</p>
@@ -55,7 +67,7 @@
         </div>
     </div>
 
-    <div class="container-xl">
+    <div class="container-xl mer_a_versailles">
 
         <div class="text-center my-5">
             <h2 class="carta-title">MER À VERSAILLES</h2>
@@ -99,7 +111,7 @@
         </div>
     </div>
 
-    <div class="container-xl">
+    <div class="container-xl ecresant_des_feuilles">
 
         <div class="text-center my-5">
             <h2 class="carta-title">ECRESANT DES FEUILLES</h2>
@@ -142,6 +154,8 @@
             } ?>
         </div>
     </div>
+
+    <script src="/primor/assets/js/filtrarcategorias.js"></script>
 </body>
 
 

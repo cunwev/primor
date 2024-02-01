@@ -4,23 +4,27 @@ include_once 'model/ProductoDAO.php';
 include_once 'model/PedidoDAO.php';
 include_once 'model/Pedido.php';
 
-class CestaController{
+class CestaController
+{
 
-    public function cesta(){
+    public function cesta()
+    {
         $allProducts = ProductoDAO::getAllProducts();
         // Panel cesta
         include_once 'views/panelCesta.php';
     }
 
-    public function eliminarProductoCesta(){
+    public function eliminarProductoCesta()
+    {
         unset($_SESSION['addproducto'][$_POST['btn_borrar']]);
         $_SESSION['addproducto'] = array_values($_SESSION['addproducto']);
-        
+
         $this->cesta();
     }
 
 
-    public function cantidadProducto(){
+    public function cantidadProducto()
+    {
         if (isset($_POST['btn_suma'])) {
             $pedido = $_SESSION['addproducto'][$_POST['btn_suma']];
             $pedido->setCantidad($pedido->getCantidad() + 1);
@@ -28,24 +32,26 @@ class CestaController{
             $pedido = $_SESSION['addproducto'][$_POST['btn_resta']];
             if ($pedido->getCantidad() == 1) {
                 unset($_SESSION['addproducto'][$_POST['btn_resta']]);
-                
+
                 //se reindexa el array
                 $_SESSION['addproducto'] = array_values($_SESSION['addproducto']);
             } else {
                 $pedido->setCantidad($pedido->getCantidad() - 1);
             }
         }
-        
+
         $this->cesta();
     }
 
 
-    public function final(){
+    public function final()
+    {
         include_once 'views/panelFinal.php';
     }
-    
 
-    public function finalizar(){
+
+    public function finalizar()
+    {
         $user_id = $_SESSION['iduser'];
         $precioFinal = $_POST['precioFinal'];
         $fechaActual = date('Y-m-d');
@@ -58,21 +64,58 @@ class CestaController{
             $contenidoPedido .= "[" . $pedido->getcantidad() . "|" . $pedido->getProducto()->getnombre() . "|" . $pedido->getCategoria() . "|" . $pedido->getProducto()->getimagen() . "|" . $pedido->getProducto()->getprecio() . "]";
         }
 
-        // Puedes imprimir o utilizar la variable $contenido según tus necesidades
-        echo $contenidoPedido;
-
         // Establece la cookie
         setcookie($_SESSION['iduser'], $precioFinal, time() + 3600);
 
         // Convierte el array a formato JSON
         $contenidoPedidoJSON = json_encode($contenidoPedido, JSON_UNESCAPED_UNICODE);
-        echo $contenidoPedidoJSON;
         // Inserta el producto en la base de datos
         $exito = PedidoDAO::insertPedido($user_id, $contenidoPedidoJSON, $precioFinal, $fechaActual);
 
         if ($exito) {
-            echo "Producto insertado correctamente";
-            $this->final(); //header('Location:' . url . '?controller=cesta&action=final');
+            $this->final();
+            $productos = explode("]", $contenidoPedidoJSON);
+
+            // Iterar sobre los productos
+            foreach ($productos as $index => $producto) {
+                // Limpiar caracteres no deseados
+                $producto = str_replace(["[", '"'], "", $producto);
+            
+                // Dividir cada producto en sus elementos
+                $elementos = explode("|", $producto);
+            
+                // Verificar si existen los índices y no están vacíos antes de imprimir
+                if (isset($elementos[0]) && $elementos[0] !== "") {
+                    echo "Cantidad: " . $elementos[0] . "<br>";
+                }
+                if (isset($elementos[1]) && $elementos[1] !== "") {
+                    echo "Nombre: " . $elementos[1] . "<br>";
+                }
+                if (isset($elementos[2]) && $elementos[2] !== "") {
+                    echo "Categoria: " . $elementos[2] . "<br>";
+                }
+                if (isset($elementos[3]) && $elementos[3] !== "") {
+                    echo "Imagen: " . $elementos[3] . "<br>";
+                }
+                if (isset($elementos[4]) && $elementos[4] !== "") {
+                    echo "Precio: " . $elementos[4] . " €<br>";
+                    
+                    // Calcular y mostrar el total solo si la cantidad es mayor a 1
+                    $cantidad = isset($elementos[0]) ? $elementos[0] : 0;
+                    if ($cantidad > 1) {
+                        $precio = isset($elementos[4]) ? $elementos[4] : 0;
+                        $total = $cantidad * $precio;
+                        echo "(" . $total . " €)<br>";
+                    }
+                }
+            
+                // Verificar si es el último elemento antes de imprimir <hr>
+                if ($index < count($productos) - 1) {
+                    echo "<hr>";
+                }
+            }
+
+            include_once "views/footer.php";
         } else {
             echo "Error al insertar el producto";
         }

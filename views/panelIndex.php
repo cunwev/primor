@@ -45,6 +45,11 @@
       width: 0;
       /* Ancho de la barra de desplazamiento a cero */
     }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 
@@ -57,19 +62,65 @@
 
   <div class="container-xl mx-52 p-0 mt-5 mb-4 margin-mode-off">
     <h2 class="page-title">Deja tu reseña</h2>
+    <!-- Botones para ordenar -->
+    <button id="ordenarAscendente">Ordenar Ascendente</button>
+    <button id="ordenarDescendente">Ordenar Descendente</button>
+
+    <label>
+        <input type="checkbox" id="filtro-5" class="filtro" checked>
+        5 Estrellas
+    </label>
+    <label>
+        <input type="checkbox" id="filtro-4" class="filtro" checked>
+        4 Estrellas
+    </label>
+    <label>
+        <input type="checkbox" id="filtro-3" class="filtro" checked>
+        3 Estrellas
+    </label>
+    <label>
+        <input type="checkbox" id="filtro-2" class="filtro" checked>
+        2 Estrellas
+    </label>
+    <label>
+        <input type="checkbox" id="filtro-1" class="filtro" checked>
+        1 Estrella
+    </label>
+
     <div class="row m-0 p-0">
       <div class="col-md-8 m-0 p-0">
         <div class="mgright mgreset mgbottom" style="height: 450px">
           <div class="ventana-scroll" style="height: 100%">
             <!-- Contenido de la ventana con scroll -->
-            <section id="nose">
+            <section id="containerReview">
 
             </section>
           </div>
         </div>
       </div>
 
+      <script>
+        // Función para actualizar las reseñas según los checkboxes seleccionados
+        function actualizarFiltro() {
+          // Obtén todos los checkboxes
+          var checkboxes = document.querySelectorAll('.filtro');
 
+          // Filtra las reseñas según los checkboxes seleccionados
+          checkboxes.forEach(function(checkbox) {
+            var estrellas = checkbox.id.split('-')[1];
+            var reseñas = document.querySelectorAll('.reseña[data-estrellas="' + estrellas + '"]');
+
+            reseñas.forEach(function(reseña) {
+              reseña.style.display = checkbox.checked ? 'block' : 'none';
+            });
+          });
+        }
+
+        // Agrega un event listener a cada checkbox
+        document.querySelectorAll('.filtro').forEach(function(checkbox) {
+          checkbox.addEventListener('change', actualizarFiltro);
+        });
+      </script>
 
       <div class="col-md-4 m-0 p-0">
         <div class="mgleft mgreset p-2" style="height: 400px !important;">
@@ -253,7 +304,7 @@
             </div>
             <div class="sub-container-product">
               <!-- Da el nombre de la categoria en mayusculas y el nombre del producto -->
-              <p class="product-categoria"><?=strtoupper($product->getNombreCategoria())?></p>
+              <p class="product-categoria"><?= strtoupper($product->getNombreCategoria()) ?></p>
               <p class="product-name"><?= $product->getnombre() ?></p>
             </div>
             <div class="text-center my-4">
