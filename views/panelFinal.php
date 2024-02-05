@@ -13,10 +13,9 @@
   </header>
 
 <body>
-<?php
+<div id="qrCodeContainer"></div>
 
-?>
-
+<script src="assets/js/qr.js"></script>
 </body>
 <!-------------------------------------------------------------------------------->
 

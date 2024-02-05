@@ -24,7 +24,8 @@
     </select>
 </form>
 </div>
-        <div class="container-xl tendencias">
+
+        <div class="categoria-container tendencias container-xl">
         <div class="text-center my-5">
             <h2 class="carta-title">TENDENCIAS</h2>
             <p>Una exquisita colección de los platos que están en boca de todos.<br>Conoce las últimas tendencias gatronómicas.</p>
@@ -67,7 +68,7 @@
         </div>
     </div>
 
-    <div class="container-xl mer_a_versailles">
+    <div class="categoria-container mer_a_versailles container-xl">
 
         <div class="text-center my-5">
             <h2 class="carta-title">MER À VERSAILLES</h2>
@@ -111,8 +112,7 @@
         </div>
     </div>
 
-    <div class="container-xl ecresant_des_feuilles">
-
+    <div class="categoria-container ecresant_des_feuilles container-xl">
         <div class="text-center my-5">
             <h2 class="carta-title">ECRESANT DES FEUILLES</h2>
             <p>Un menú otoñal que celebra los ingredientes y sabores que se encuentran en su apogeo durante esta temporada.<br>Disfruta de una experiencia culinaria cálida y reconfortante.</p>
@@ -154,7 +154,6 @@
             } ?>
         </div>
     </div>
-
     <script src="/primor/assets/js/filtrarcategorias.js"></script>
 </body>
 

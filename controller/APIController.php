@@ -22,4 +22,26 @@ class APIController{
 
     }
 
+    public function datosultimopedido() {
+        $pedidos = $_SESSION['addproducto'];
+        $array = [];
+    
+        foreach ($pedidos as $pedido) {
+    
+            $array[] = [
+                'Categoria_Producto' => $pedido->getCategoria(),
+                'Nombre_Producto' => $pedido->getProducto()->getnombre(),
+                'Precio_Producto' => $pedido->getProducto()->getprecio(),
+                'Imagen_Producto' => $pedido->getProducto()->getimagen(),
+                'Producto_ID' => $pedido->getProducto()->getproducto_id(),
+                'Stock' => $pedido->getProducto()->getStock(),
+                'Categoria_ID' => $pedido->getProducto()->getcategoria_id(),
+                'Nombre_Categoria' => $pedido->getProducto()->getNombreCategoria(),
+                'cantidad' => $pedido->getcantidad(),
+            ];
+        }
+
+        echo json_encode($array, JSON_UNESCAPED_UNICODE);
+        return;
+    }
 }
