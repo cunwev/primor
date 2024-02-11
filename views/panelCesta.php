@@ -61,7 +61,7 @@
           }
           ?>
         </div>
-
+        <script src="assets/js/propina.js"></script>
         <div class="col-sm-4">
           <div class="cart-summary-container">
             <p class="cart-subtotal">Subtotal <?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) * 0.90, 2) . " €" ?></p>
@@ -71,46 +71,29 @@
             <?php if (!isset($_SESSION['user'])) { ?>
               <form class="p-2" action="<?= url . '?controller=user&action=login' ?>" method="post">
               <?php } else { ?>
-                <form class="p-2" action="<?= url . '?controller=cesta&action=finalizar' ?>" method="post">
+                <form id="myForm" class="p-2" action="<?= url . '?controller=cesta&action=finalizar' ?>" method="post">
                 <?php } ?>
                 <input class="input-text-descuento" type="text" placeholder="Introducir código de descuento" />
                 <button type="submit" class="fw-semibold btn-a btn-cart-aplicar p-0">APLICAR</button>
-                <input type="hidden" name="precioFinal" value="<?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']), 2) ?>">
+                <!-- precioTotalJS -->
+                <input class="precioTotalVista" type="hidden" name="precioFinal" value="<?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']), 2) ?>">
+                <p class="precioPropina"></p>
+
+                <input type="radio" id="radio0" name="miRadio" value="propina0">
+                <label for="radio0">Nada</label><br>
+
+                <input type="radio" id="radio1" name="miRadio" value="propina3"> <!-- Seleccionado por defecto CHECKED -->
+                <label for="radio1">3</label><br>
+
+                <input type="radio" id="radio2" name="miRadio" value="propina5">
+                <label for="radio2">5</label><br>
+
+                <input type="radio" id="radio3" name="miRadio" value="propina10">
+                <label for="radio3">10</label><br>
 
                 <button type="submit" name="precio" id="finalizarbtn" class="fw-semibold btn-c btn-cart-tramitar">TRAMITAR PEDIDO (<?= count($_SESSION['addproducto']); ?> artículos)</button>
-                </form>
-                <p class="cart-total m-0" id="precioPedido">Total del pedido <?= CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) . " € " ?></p>
-<!-- Asegúrate de que estás incluyendo Axios en tu HTML -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<p class="cart-total m-0" id="precioPedido">Total del pedido <?= CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) . " € " ?></p>
-<div>
-  <p id="precioTotal">Precio Total: </p>
-  <p id="precioTotalConPropina">Precio Total con Propina: </p>
-</div>
 
-<!-- FORMULARIO PROPINA -->
-<div class="text-center my-4">
-  <label>
-    <input type="radio" name="propina" value="0" onclick="seleccionarPropina(0)">
-    Nada
-  </label>
-
-  <label>
-    <input type="radio" name="propina" value="0.03" onclick="seleccionarPropina(0.03)" checked>
-    3% (<span id="propina3"><?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) * 0.03, 2) ?></span> €)
-  </label>
-
-  <label>
-    <input type="radio" name="propina" value="0.05" onclick="seleccionarPropina(0.05)">
-    5% (<span id="propina5"><?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) * 0.05, 2) ?></span> €)
-  </label>
-
-  <label>
-    <input type="radio" name="propina" value="0.10" onclick="seleccionarPropina(0.10)">
-    10% (<span id="propina10"><?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) * 0.10, 2) ?></span> €)
-  </label>
-</div>
 
 
 
@@ -189,8 +172,8 @@
       } ?>
     </div>
   </div>
-  <script src="assets/js/localStoragePedido.js"></script>
-  <script src="assets/js/propina.js"></script>
+
+
 </body>
 <!-------------------------------------------------------------------------------->
 

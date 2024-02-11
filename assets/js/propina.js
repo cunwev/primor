@@ -1,28 +1,93 @@
-let propinaSeleccionada = 0; // Inicializar la propina seleccionada
+document.addEventListener('DOMContentLoaded', function() {
+  // Obtén todos los elementos de radio en un NodeList
+  var radios = document.querySelectorAll('input[name="miRadio"]');
+  var propinaMultiplicador;
 
-  function seleccionarPropina(porcentaje) {
-    propinaSeleccionada = porcentaje;
+  // Itera sobre los radios y agrega un event listener a cada uno
+  radios.forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      // Dependiendo de qué opción de radio se seleccionó, actualiza el valor de la variable JavaScript
+      switch(this.value) {
+        case "propina0":
+          propinaMultiplicador = 0.00;
+          break;
+        case "propina3":
+          propinaMultiplicador = 0.03;
+          break;
+        case "propina5":
+          propinaMultiplicador = 0.05;
+          break;
+        case "propina10":
+          propinaMultiplicador = 0.10;
+          break;
+        default:
+          propinaMultiplicador = 20.00; // Valor predeterminado si no se selecciona ninguna opción válida
+      }
 
-    // Realizar solicitud Axios
-    axios.post('CalculadoraPrecios.php', { propina: propinaSeleccionada })
-      .then(function (response) {
-        // Actualizar la interfaz de usuario con los resultados
-        document.getElementById('precioTotal').textContent = 'Precio Total: ' + response.data.precioTotal + ' €';
-        document.getElementById('precioTotalConPropina').textContent = 'Precio Total con Propina: ' + response.data.precioTotalConPropina + ' €';
+      // Obtén el precio total desde el input con clase 'precioTotal'
+      var precioTotalJS = parseFloat(document.querySelector('.precioTotalVista').value);
 
-        // Actualizar valores de propina en el HTML
-        document.getElementById('propina3').innerText = round(response.data.precioTotal * 0.03, 2);
-        document.getElementById('propina5').innerText = round(response.data.precioTotal * 0.05, 2);
-        document.getElementById('propina10').innerText = round(response.data.precioTotal * 0.10, 2);
+      // Calcula el valor de propina
+      var propina = precioTotalJS * propinaMultiplicador;
 
-        // Actualizar el texto del Total del pedido (opcional)
-        document.getElementById('precioPedido').innerText = 'Total del pedido ' + response.data.precioTotal + ' €';
-      })
-      .catch(function (error) {
-        console.error('Error en la solicitud Axios:', error);
-      });
-  }
+      // Muestra el valor de la propina en algún lugar (como un div con clase 'precioPropina')
+      var propinaElemento = document.querySelector('.precioPropina');
+      propinaElemento.textContent = propina.toFixed(2) + "€";
 
-  function round(value, decimals) {
-    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
-  }
+      // Envía el valor de la propina al servidor
+      // enviarPropinaAlServidor(propina);
+      console.log(propina);
+      {
+        const cuerpoSolicitud = { propina: propina };
+        const parametrosFetch = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(cuerpoSolicitud)
+        };
+    
+        fetch('http://localhost/primor/index.php?controller=api&action=guardarPropina', parametrosFetch)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('La solicitud falló');
+            }
+            // Leer el cuerpo de la respuesta como JSON
+            return response.json();
+          })
+          .then(data => {
+            // Hacer algo con los datos (si los hay)
+            console.log('Respuesta del servidor:', data);
+          })
+          .catch(error => {
+            // Manejar errores
+            console.error('Error al enviar la propina al servidor:', error.message);
+          });
+      }
+    });
+  });
+
+  // function enviarPropinaAlServidor(propina) {
+  //   const cuerpoSolicitud = { propina: propina };
+  //   const parametrosFetch = {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(cuerpoSolicitud)
+  //   };
+
+  //   fetch('http://localhost/primor/index.php?controller=api&action=guardarPropina', parametrosFetch)
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error('La solicitud falló');
+  //       }
+  //       // Leer el cuerpo de la respuesta como JSON
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       // Hacer algo con los datos (si los hay)
+  //       console.log('Respuesta del servidor:', data);
+  //     })
+  //     .catch(error => {
+  //       // Manejar errores
+  //       console.error('Error al enviar la propina al servidor:', error.message);
+  //     });
+  // }
+});

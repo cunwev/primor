@@ -1,18 +1,4 @@
 <?php
-/*Class CalculadoraPrecios{
-
-    public static function calculadorPrecioPedido($pedidos){
-        $precioTotal = 0;
-        
-        foreach ($pedidos as $pedido){
-            $precioTotal += $pedido->getProducto()->getprecio()*$pedido->getCantidad();
-        }
-        
-        return number_format($precioTotal, 2);
-    }
-}
-*/
-
 
 Class CalculadoraPrecios{
 
@@ -20,16 +6,23 @@ Class CalculadoraPrecios{
         $precioTotal = 0;
         
         foreach ($pedidos as $pedido){
-            $precioTotal += $pedido->getProducto()->getprecio() * $pedido->getCantidad();
+            $precioTotal += $pedido->getProducto()->getprecio()*$pedido->getCantidad();
         }
-        
-        // Obtener la propina enviada por Axios
-        $propina = isset($_POST['propina']) ? floatval($_POST['propina']) : 0;
+        return number_format($precioTotal, 2);
+    }
 
-        // Aplicar la propina al precio total
-        $precioTotalConPropina = $precioTotal * (1 + $propina);
 
-        return number_format($precioTotalConPropina, 2);
+
+    public static function precioTotalPedido ($pedidos, $propinaSeleccionada) {
+
+        $subTotal = self::calculadorPrecioPedido($pedidos);
+
+        $precioTotal = $subTotal + ($subTotal * $propinaSeleccionada);
+
+        $_SESSION['precioTotalPedido'] = $precioTotal;
+
+        return $precioTotal;
+
     }
 }
 ?>

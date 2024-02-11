@@ -1,4 +1,5 @@
 <?php
+//session_start();  Iniciamos la sesión si no se ha iniciado aún, quiza se pueda eliminar mas adelante.
 //Esto es un NUEVO CONTROLADOR
 //hacer todas las configuraciones necesarias para que funcione como controlador
 
@@ -19,7 +20,6 @@ class APIController{
             echo json_encode($comentarios, JSON_UNESCAPED_UNICODE) ; 
 
             return; //return para salir de la funcion
-
     }
 
     public function datosultimopedido() {
@@ -43,5 +43,18 @@ class APIController{
 
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
         return;
+    }
+
+    // Función para guardar el valor de la propina en la sesión del usuario
+    public function guardarPropina() {
+
+        // Obtenemos el valor de la propina del cuerpo de la solicitud JSON
+        $valorPropina = json_decode(file_get_contents('php://input'), true);
+
+        // Lo guardaremos en una variable:
+        $propina = $valorPropina['propina'];
+
+        // Almacenaremos el valor de la propina en la sesión del usuario:
+        $_SESSION['propina'] = $propina;
     }
 }
