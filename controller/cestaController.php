@@ -51,8 +51,14 @@ class CestaController
     }
 
 
+    //Función nexo para almacenar el pedido, mostrar el pedido en el panel final, calcular propina, almacenar puntos.
     public function finalizar(){
+        
+    //Obtenemos los puntos de la SESSION
+    $puntos = $_SESSION['puntosSumar'];
+    //Obtenemos la ID del usuario de la SESSION
     $user_id = $_SESSION['iduser'];
+    //Obtenemos la propina de la SESSION, la convertimos en valor tipo float
     $propina = floatval($_SESSION['propina']);
     $precioFinal = $_POST['precioFinal'] + $propina;
     $fechaActual = date('Y-m-d');
@@ -71,6 +77,9 @@ class CestaController
 
     // Inserta el producto en la base de datos
     $exito = PedidoDAO::insertPedido($user_id, $contenidoPedidoJSON, $precioFinal, $fechaActual);
+
+    // Inserta los puntos en la base de datos
+    $exito = PedidoDAO::insertPuntos($user_id, $puntos);
 
     if ($exito) {
         $this->final();

@@ -57,4 +57,17 @@ class APIController{
         // Almacenaremos el valor de la propina en la sesión del usuario:
         $_SESSION['propina'] = $propina;
     }
+
+        // Función para guardar el valor de los puntos en la sesión del usuario
+        public function guardarPuntos() {
+
+            // Obtenemos el valor de los puntos del cuerpo de la solicitud JSON
+            $valorPuntos = json_decode(file_get_contents('php://input'), true);
+    
+            // Lo guardaremos en una variable:
+            $puntos = $valorPuntos['puntos'];
+    
+            // Almacenaremos el valor de los puntos en la sesión del usuario:
+            $_SESSION['puntosSumar'] = $puntos;
+        }
 }

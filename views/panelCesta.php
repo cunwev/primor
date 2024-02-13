@@ -61,7 +61,7 @@
           }
           ?>
         </div>
-        <script src="assets/js/propina.js"></script>
+
         <div class="col-sm-4">
           <div class="cart-summary-container">
             <p class="cart-subtotal">Subtotal <?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']) * 0.90, 2) . " €" ?></p>
@@ -77,12 +77,12 @@
                 <button type="submit" class="fw-semibold btn-a btn-cart-aplicar p-0">APLICAR</button>
                 <!-- precioTotalJS -->
                 <input class="precioTotalVista" type="hidden" name="precioFinal" value="<?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']), 2) ?>">
-                <p class="precioPropina"></p>
+                <p class="precioPropinaVista"></p>
 
                 <input type="radio" id="radio0" name="miRadio" value="propina0">
                 <label for="radio0">Nada</label><br>
 
-                <input type="radio" id="radio1" name="miRadio" value="propina3"> <!-- Seleccionado por defecto CHECKED -->
+                <input type="radio" id="radio1" name="miRadio" value="propina3" checked> <!-- Seleccionado por defecto CHECKED -->
                 <label for="radio1">3</label><br>
 
                 <input type="radio" id="radio2" name="miRadio" value="propina5">
@@ -90,7 +90,7 @@
 
                 <input type="radio" id="radio3" name="miRadio" value="propina10">
                 <label for="radio3">10</label><br>
-
+                <p class="puntosVista"></p>
                 <button type="submit" name="precio" id="finalizarbtn" class="fw-semibold btn-c btn-cart-tramitar">TRAMITAR PEDIDO (<?= count($_SESSION['addproducto']); ?> artículos)</button>
 
 
@@ -173,7 +173,8 @@
     </div>
   </div>
 
-
+  <script src="assets/js/propina.js"></script>
+  <script src="assets/js/puntos.js"></script>
 </body>
 <!-------------------------------------------------------------------------------->
 

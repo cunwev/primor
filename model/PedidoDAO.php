@@ -23,4 +23,39 @@ class PedidoDAO {
         return $exito;
     }
 
+
+    //Al realizar el pedido se insertan los puntos en el usuario
+    public static function insertPuntos($user_id, $puntos) {
+
+        // Conexion con la basse de datos
+        $conexion = DataBase::connect();
+        
+        $user_ide = $user_id;
+        $puntose = $puntos;
+
+        // Preparamos la consulta para actualizar los puntos del usuario actual
+        $stmt = $conexion->prepare("UPDATE usuarios SET puntos = puntos + ? WHERE user_id = ?");
+        $stmt->bind_param("ii", $puntose, $user_ide);
+
+        $exito = $stmt->execute();
+        $stmt->close();
+        return $exito;
+    }
+
+    //Muestra los puntos de los que dispone el usuario.
+    public static function mostrarPuntos($user_id) {
+
+        // Conexion con la basse de datos
+        $conexion = DataBase::connect();
+        
+        $user_ide = $user_id;
+
+        // Preparamos la consulta para actualizar los puntos del usuario actual
+        $stmt = $conexion->prepare("SELECT usuarios WHERE user_id = ?");
+        $stmt->bind_param("i", $user_ide);
+
+        $exito = $stmt->execute();
+        $stmt->close();
+        return $exito;
+    }
 }
