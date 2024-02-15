@@ -14,3 +14,5 @@
   <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="assets/icons/favicon32x32.ico" type="image/x-icon" size="32x32">
   <link rel="shortcut" href="assets/icons/favicon32x32.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notie/dist/notie.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notie/dist/notie.min.js"></script>

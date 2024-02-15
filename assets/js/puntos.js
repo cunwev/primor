@@ -1,3 +1,8 @@
+let puntos = 0;
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Obtener el precio total del pedido
     var precioTotalJS = parseFloat(document.querySelector('.precioTotalVista').value);
@@ -32,8 +37,21 @@ fetch('http://localhost/primor/index.php?controller=api&action=guardarPuntos', p
         // Hacer algo con los datos (si los hay)
         console.log('Respuesta del servidor:', data);
     })
-    .catch(error => {
-        // Manejar errores
-        console.error('Error al enviar los puntos al servidor:', error.message);
-    });
+
+    fetch('http://localhost/primor/index.php?controller=api&action=mostrarPuntos', parametrosFetch)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('La solicitud falló');
+        }
+        // Leer el cuerpo de la respuesta como JSON
+
+        return response.json();
+        
+    })
+    .then(data => {
+        // Hacer algo con los datos (si los hay)
+        puntos=data;
+        console.log(puntos);
+        document.getElementById('mostrarPuntos').innerHTML = "Actualmente dispones de <b>" +puntos + "</b> puntos.";
+    })
 });

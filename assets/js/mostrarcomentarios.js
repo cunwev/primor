@@ -1,71 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let comentarios = []; // Variable global para almacenar los comentarios
+    let valores = "";
+    let estrellasSeleccionadas = [];
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="estrella"]');
 
-    // Función para mostrar los comentarios en el contenedor
-    function mostrarComentarios(comentariosMostrar) {
-        let seccion = document.getElementById('containerReview');
-        seccion.innerHTML = ''; // Limpiar el contenedor antes de mostrar los comentarios
 
-        comentariosMostrar.forEach(comentario => {
-            let div = document.createElement("article");
-            div.className = "qwert";
-            seccion.appendChild(div);
-            let nombre = document.createElement('h4');
-            let comentariosElemento = document.createElement('p');
-            let saltoLinea = document.createElement('hr');
-            nombre.innerHTML = comentario["titulo"];
-            comentariosElemento.innerHTML = comentario["comentario"];
-            valoracionElemento.innerHTML = comentario["valoracion"];
-            div.appendChild(nombre);
-            div.appendChild(comentariosElemento);
-
-            // Bucle para imprimir estrellas
-            for (let i = 0; i < 5; i++) {
-                let valoracionElemento = document.createElement('span');
-                valoracionElemento.setAttribute('data-valoracion', i + 1); // Añadir atributo de datos
-                valoracionElemento.innerHTML = "<img src='assets/icons/estrella_" + (i < comentario["valoracion"] ? "si" : "no") + ".svg' height='25px' width='25px' alt='Description of the image'>";
-                div.appendChild(valoracionElemento);
-            }
-
-            div.appendChild(saltoLinea);
-        });
-    }
-
-    // Función para ordenar los comentarios según la valoración
-    function ordenarComentarios(orden) {
-        comentarios.sort(function(a, b) {
-            if (orden === 'asc') {
-                return a.valoracion - b.valoracion;
-            } else {
-                return b.valoracion - a.valoracion;
-            }
-        });
-
-        mostrarComentarios(comentarios);
-    }
-
-    // Función para filtrar los comentarios por valoración
-    function filtrarComentarios() {
-        let checkboxes = document.querySelectorAll('.filtro');
-        let valoracionesFiltradas = [];
-
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                let valoracionSeleccionada = parseInt(checkbox.id.split('-')[1]);
-
-                // Filtrar comentarios según la valoración seleccionada
-                let comentariosFiltrados = comentarios.filter(comentario => comentario.valoracion === valoracionSeleccionada);
-
-                valoracionesFiltradas = valoracionesFiltradas.concat(comentariosFiltrados);
-            }
-        });
-
-        // Mostrar los comentarios filtrados
-        mostrarComentarios(valoracionesFiltradas);
-    }
-
-    // Hacer la solicitud para obtener los comentarios
-    fetch('http://localhost/primor/index.php?controller=api&action=mostrarcomentarios', {
+    fetch('http://localhost/primor/index.php?controller=api&action=mostrarcomentarios',{
         method: 'POST',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -74,22 +13,87 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => {
         return response.json();
     })
-    .then(data => {
-        comentarios = data; // Almacena los comentarios en la variable global
-        mostrarComentarios(comentarios); // Muestra los comentarios al cargar la página
-    });
+    .then(pepe => {
+        // Puedes hacer algo con los datos aquí
+        asdf(pepe); 
+        valores = pepe
+        
+    })
 
-    // Agregar eventos a los botones de ordenar
-    document.getElementById('ordenarAscendente').addEventListener('click', function() {
-        ordenarComentarios('asc');
-    });
+    function asdf(pepe) {
+    let seccion = document.getElementById('containerReview');
+    
+    seccion.innerHTML = '';
+        pepe.forEach(comentario => {
+            let div = document.createElement("article");
+            div.className = "qwert";
+            seccion.appendChild(div);
+            let nombre = document.createElement('h4');
+            let comentariosElemento = document.createElement('p');
+            let saltoLinea = document.createElement('hr');
+            nombre.innerHTML = comentario["titulo"];
+            comentariosElemento.innerHTML = comentario["comentario"];
+            div.appendChild(nombre);
+            div.appendChild(comentariosElemento);
+    
+            // Primer bucle para imprimir "ESTRELLA SI" según el valor de comentario["valoracion"]
+            for (let i = 0; i < comentario["valoracion"]; i++) {
+                let valoracionElementoA = document.createElement('span');
+                valoracionElementoA.innerHTML = "<img src='assets/icons/estrella_si.svg' height='25px' width='25px' alt='Description of the image'>";
+                div.appendChild(valoracionElementoA);
+            }
+    
+            // Segundo bucle para imprimir "ESTRELLA NO" según la diferencia entre 5 y comentario["valoracion"]
+            for (let j = 0; j < (5 - comentario["valoracion"]); j++) {
+                let valoracionElementoB = document.createElement('span');
+                valoracionElementoB.innerHTML = "<img src='assets/icons/estrella_no.svg' height='25px' width='25px' alt='Description of the image'>";
+                div.appendChild(valoracionElementoB);
+            }
+    
+            div.appendChild(saltoLinea);
+        });
+}
 
-    document.getElementById('ordenarDescendente').addEventListener('click', function() {
-        ordenarComentarios('desc');
-    });
+function filtrarporestrellas() {
+    si = valores.filter(sol => estrellasSeleccionadas.includes(parseInt(sol.valoracion)));
 
-    // Agregar evento a los checkboxes de filtrar
-    document.querySelectorAll('.filtro').forEach(function(checkbox) {
-        checkbox.addEventListener('change', filtrarComentarios);
+    asdf(si);
+        if (si.length == 0) {
+            fetch('http://localhost/primor/index.php?controller=api&action=mostrarcomentarios',{
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(pepe => {
+                // Puedes hacer algo con los datos aquí
+                asdf(pepe); 
+                valores = pepe
+            } )       
+        }
+}
+
+
+
+
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const valor = parseInt(this.value);
+            if (this.checked) {
+                estrellasSeleccionadas.push(valor);
+                
+            } else {
+                estrellasSeleccionadas = estrellasSeleccionadas.filter(item => item !== valor);
+
+            }
+            estrellasSeleccionadas.sort((a, b) => a - b); // Ordenar el array
+            filtrarporestrellas();
+            // Aquí aplicamos el filtrado de comentarios con la nueva array de estrellas seleccionadas
+
+        });
     });
 });

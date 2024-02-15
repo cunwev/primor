@@ -22,6 +22,29 @@ class APIController{
             return; //return para salir de la funcion
     }
 
+
+    public function comprobarusuario(){
+        $userid = $_SESSION['userid'];
+        // Enviar respuesta al cliente
+        $response = array(
+            'userid' => $userid
+        );
+        echo json_encode($response);
+    }
+
+
+    public function agregarcomentarios(){
+        $valorComentario = json_decode(file_get_contents('php://input'), true);
+
+        $_SESSION['titulo'] = $valorComentario['titulo'];
+        $_SESSION['comentario'] = $valorComentario['comentario'];
+        $_SESSION['valoracion'] = $valorComentario['valoracion'];
+
+        ComentarioDAO::insertcomentarios();
+        return;
+}
+
+
     public function datosultimopedido() {
         $pedidos = $_SESSION['addproducto'];
         $array = [];
@@ -56,18 +79,35 @@ class APIController{
 
         // Almacenaremos el valor de la propina en la sesión del usuario:
         $_SESSION['propina'] = $propina;
+
+        return;
     }
 
-        // Función para guardar el valor de los puntos en la sesión del usuario
-        public function guardarPuntos() {
+    // Función para guardar el valor de los puntos en la sesión del usuario
+    public function guardarPuntos() {
 
-            // Obtenemos el valor de los puntos del cuerpo de la solicitud JSON
-            $valorPuntos = json_decode(file_get_contents('php://input'), true);
-    
-            // Lo guardaremos en una variable:
-            $puntos = $valorPuntos['puntos'];
-    
-            // Almacenaremos el valor de los puntos en la sesión del usuario:
-            $_SESSION['puntosSumar'] = $puntos;
-        }
+        // Obtenemos el valor de los puntos del cuerpo de la solicitud JSON
+        $valorPuntos = json_decode(file_get_contents('php://input'), true);
+
+        // Lo guardaremos en una variable:
+        $puntos = $valorPuntos['puntos'];
+
+        // Almacenaremos el valor de los puntos en la sesión del usuario:
+        $_SESSION['puntosSumar'] = $puntos;
+
+        return;
+    }
+
+    // Función para mostrar el valor de los puntos en la sesión del usuario
+    public function mostrarPuntos() {
+
+        $userid = $_SESSION['iduser'];
+        PedidoDAO::mostrarPuntos($userid);
+        $puntos = $_SESSION['puntosMostrar'];
+
+
+        echo json_encode($puntos, JSON_UNESCAPED_UNICODE);
+
+        return;
+    }
 }

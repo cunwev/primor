@@ -65,25 +65,24 @@
     <!-- Botones para ordenar -->
     <button id="ordenarAscendente">Ordenar Ascendente</button>
     <button id="ordenarDescendente">Ordenar Descendente</button>
-
     <label>
-        <input type="checkbox" id="filtro-5" class="filtro" checked>
+        <input type="checkbox" id="filtro-5" name="estrella" value="5" >
         5 Estrellas
     </label>
     <label>
-        <input type="checkbox" id="filtro-4" class="filtro" checked>
+        <input type="checkbox" id="filtro-4" name="estrella" value="4" >
         4 Estrellas
     </label>
     <label>
-        <input type="checkbox" id="filtro-3" class="filtro" checked>
+        <input type="checkbox" id="filtro-3" name="estrella" value="3" >
         3 Estrellas
     </label>
     <label>
-        <input type="checkbox" id="filtro-2" class="filtro" checked>
+        <input type="checkbox" id="filtro-2" name="estrella" value="2" >
         2 Estrellas
     </label>
     <label>
-        <input type="checkbox" id="filtro-1" class="filtro" checked>
+        <input type="checkbox" id="filtro-1" name="estrella" value="1" >
         1 Estrella
     </label>
 
@@ -126,27 +125,26 @@
         <div class="mgleft mgreset p-2" style="height: 400px !important;">
           <form id="resenaForm">
             <label class="label-text-login w-100">Título *</label>
-            <input type="text" placeholder="Introduce un título" maxlength="45" style="width:100%;" required>
+            <input id="titulo" type="text" placeholder="Introduce un título" maxlength="45" style="width:100%;" required>
             <br><br>
             <label class="label-text-login w-100">Comentario *</label>
-            <textarea placeholder="Introduce aquí tu reseña" cols="6" rows="1" maxlength="300" style="resize: none; width:100%; height:50%;" required></textarea>
+            <textarea id="comentario" placeholder="Introduce aquí tu reseña" cols="6" rows="1" maxlength="300" style="resize: none; width:100%; height:50%;" required></textarea>
             <br><br>
             <label class="label-text-login w-100">Valoración *</label>
             <div class="rating d-flex flex-row-reverse justify-content-end">
-              <input type="radio" id="estrella5" name="puntuacion" value="5">
+              <input type="radio" id="estrella5" name="valoracion" value="5">
               <label for="estrella5"></label>
-              <input type="radio" id="estrella4" name="puntuacion" value="4">
+              <input type="radio" id="estrella4" name="valoracion" value="4">
               <label for="estrella4"></label>
-              <input type="radio" id="estrella3" name="puntuacion" value="3">
+              <input type="radio" id="estrella3" name="valoracion" value="3">
               <label for="estrella3"></label>
-              <input type="radio" id="estrella2" name="puntuacion" value="2">
+              <input type="radio" id="estrella2" name="valoracion" value="2">
               <label for="estrella2"></label>
-              <input type="radio" id="estrella1" name="puntuacion" value="1" checked>
+              <input type="radio" id="estrella1" name="valoracion" value="1" checked>
               <label for="estrella1"></label>
             </div>
             <br>
-            <button type="button" class="boton_comentario" onclick="agregarComentario()">Agrega tu comentario!</button>
-          </form>
+            <button type="button" id="boton_comentario">Agrega tu comentario!</button>
           </form>
         </div>
       </div>
@@ -321,7 +319,8 @@
       } ?>
     </div>
   </div>
-  <script src="/primor/assets/js/mostrarcomentarios.js"></script>
+  <script src="assets/js/agregarcomentarios.js"></script>
+  <script src="assets/js/mostrarcomentarios.js"></script>
 </body>
 
 <?php include_once "views/footer.php" ?>

@@ -37,5 +37,20 @@ class ComentarioDAO{
         return $comentarios;
     }
 
+    public static function insertcomentarios() {
+        // Conexion con la base de datos
+        $conexion = DataBase::connect();
+        $user_id = $_SESSION['iduser'];
+        $titulo = $_SESSION['titulo'];
+        $comentario = $_SESSION['comentario'];
+        $valoracion = $_SESSION['valoracion'];
+
+        $stmt = $conexion->prepare("INSERT INTO COMENTARIOS (user_id, titulo, comentario, valoracion) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("issi", $user_id, $titulo, $comentario, $valoracion);
+
+        $exito = $stmt->execute();
+        $stmt->close();
+        return $exito;
+    }
 }
 ?>

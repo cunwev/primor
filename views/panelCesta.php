@@ -91,6 +91,10 @@
                 <input type="radio" id="radio3" name="miRadio" value="propina10">
                 <label for="radio3">10</label><br>
                 <p class="puntosVista"></p>
+
+                <input type="checkbox" id="checkbox" name="checkbox">
+                <label for="checkbox" id="mostrarPuntos"></label>
+
                 <button type="submit" name="precio" id="finalizarbtn" class="fw-semibold btn-c btn-cart-tramitar">TRAMITAR PEDIDO (<?= count($_SESSION['addproducto']); ?> artículos)</button>
 
 
