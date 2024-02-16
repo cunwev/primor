@@ -144,7 +144,11 @@
               <label for="estrella1"></label>
             </div>
             <br>
-            <button type="button" id="boton_comentario">Agrega tu comentario!</button>
+            <?php if (isset($_SESSION['user'])) { ?>
+            <button class="fw-semibold w-100 btn-login" type="button" id="boton_comentario">Agrega tu comentario!</button>
+            <?php } else { ?>
+              <button class="fw-semibold w-100 btn-login">Inicia sesión para agregar un comentario</button>
+            <?php } ?>
           </form>
         </div>
       </div>

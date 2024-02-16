@@ -44,7 +44,7 @@ class APIController{
         return;
 }
 
-
+    // QR -------------------------------------------------------------------------------------------------------------------------
     public function datosultimopedido() {
         $pedidos = $_SESSION['addproducto'];
         $array = [];
@@ -63,11 +63,13 @@ class APIController{
                 'cantidad' => $pedido->getcantidad(),
             ];
         }
-
+        //const localStorage.setItem('contenidoPedido');
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
+
         return;
     }
 
+    //PROPINA -------------------------------------------------------------------------------------------------------------------------
     // Función para guardar el valor de la propina en la sesión del usuario
     public function guardarPropina() {
 
@@ -83,6 +85,7 @@ class APIController{
         return;
     }
 
+    //PUNTOS -------------------------------------------------------------------------------------------------------------------------
     // Función para guardar el valor de los puntos en la sesión del usuario
     public function guardarPuntos() {
 
@@ -108,6 +111,20 @@ class APIController{
 
         echo json_encode($puntos, JSON_UNESCAPED_UNICODE);
 
+        return;
+    }
+
+    // Función para gastar los puntos
+    public function gastarPuntos() {
+
+        // Obtenemos el valor de los puntos del cuerpo de la solicitud JSON
+        $checkboxPuntos = json_decode(file_get_contents('php://input'), true);
+
+        // Lo guardaremos en una variable:
+        $checkboxPuntosValue = $checkboxPuntos['checkbox'];
+
+        // Almacenaremos el valor de los puntos en la sesión del usuario:
+        $_SESSION['checkboxPuntos'] = $checkboxPuntosValue;
         return;
     }
 }

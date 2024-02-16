@@ -53,14 +53,17 @@ class CestaController
 
     //Función nexo para almacenar el pedido, mostrar el pedido en el panel final, calcular propina, almacenar puntos.
     public function finalizar(){
-        
+    //Obtenemos si se usan puntos o no en la SESSION
+    $checkboxPuntos = $_SESSION['checkboxPuntos'];
     //Obtenemos los puntos de la SESSION
     $puntos = $_SESSION['puntosSumar'];
+    $puntosGastar = $_SESSION['puntosMostrar'];
     //Obtenemos la ID del usuario de la SESSION
     $user_id = $_SESSION['iduser'];
     //Obtenemos la propina de la SESSION, la convertimos en valor tipo float
     $propina = floatval($_SESSION['propina']);
-    $precioFinal = $_POST['precioFinal'] + $propina;
+    $precioFinal = floatval($_POST['precioFinal']);
+    $precioFinal = $precioFinal + $propina;
     $fechaActual = date('Y-m-d');
 
     // Inicializa una variable para almacenar la salida
@@ -74,12 +77,22 @@ class CestaController
     // Convierte el array a formato JSON
     $contenidoPedidoJSON = json_encode($contenidoPedido, JSON_UNESCAPED_UNICODE);
 
-
-    // Inserta el producto en la base de datos
-    $exito = PedidoDAO::insertPedido($user_id, $contenidoPedidoJSON, $precioFinal, $fechaActual);
-
     // Inserta los puntos en la base de datos
     $exito = PedidoDAO::insertPuntos($user_id, $puntos);
+
+    // Inserta los puntos en la base de datos
+    if ($checkboxPuntos == true) {
+        // Definir la regla de tres: cada 100 puntos gastados equivalen a 10 euros de descuento
+        $valorPorCada100 = 10;
+        $puntosDescuento = ($puntosGastar / 100) * $valorPorCada100;
+        $precioFinal = $precioFinal - $puntosDescuento;
+        $exito = PedidoDAO::updatePuntos($user_id);
+    }
+
+    // Inserta el producto en la base de datos
+    $exito = PedidoDAO::insertPedido($user_id, $contenidoPedidoJSON, $precioFinal, $propina, $puntosGastar, $puntos, $fechaActual);
+
+
 
     if ($exito) {
         $this->final();

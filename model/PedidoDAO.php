@@ -5,16 +5,19 @@ include_once 'Pedido.php';
 
 class PedidoDAO {
 
-    public static function insertPedido($user_id, $contenidoPedidoJSON, $precioFinal, $fechaActual){
+    public static function insertPedido($user_id, $contenidoPedidoJSON, $precioFinal, $propina, $puntosGastar, $puntos, $fechaActual){
         $conexion = Database::connect();
 
         $user_ide = $user_id;
         $pedido = $contenidoPedidoJSON;
         $precioTotal = $precioFinal;
+        $propinae = $propina;
+        $puntos_utilizados = $puntosGastar;
+        $puntos_obtenidos = $puntos;
         $fecha = $fechaActual;
         
-        $stmt = $conexion->prepare("INSERT INTO `pedidos` (user_id, pedido, precio, fecha) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("isis", $user_ide, $pedido, $precioTotal, $fecha);
+        $stmt = $conexion->prepare("INSERT INTO `pedidos` (user_id, pedido, precio, propina, puntos_utilizados, puntos_obtenidos, fecha) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isddiis", $user_ide, $pedido, $precioTotal, $propinae, $puntos_utilizados, $puntos_obtenidos, $fecha);
         
 
 
@@ -42,22 +45,7 @@ class PedidoDAO {
         return $exito;
     }
 
-    // //Muestra los puntos de los que dispone el usuario.
-    // public static function mostrarPuntos($user_id) {
 
-    //     // Conexion con la basse de datos
-    //     $conexion = DataBase::connect();
-        
-    //     $user_ide = $user_id;
-
-    //     // Preparamos la consulta para actualizar los puntos del usuario actual
-    //     $stmt = $conexion->prepare("SELECT usuarios WHERE user_id = ?");
-    //     $stmt->bind_param("i", $user_ide);
-
-    //     $exito = $stmt->execute();
-    //     $stmt->close();
-    //     return $exito;
-    // }
 
     public static function mostrarPuntos($user_id) {
 
@@ -87,7 +75,6 @@ class PedidoDAO {
             $stmt->close();
             
             // Retornamos los puntos obtenidos
-            //return $puntos;
             return;
         } else {
             // Si no se encontraron resultados, retornamos 0
@@ -95,5 +82,21 @@ class PedidoDAO {
             return 0;
         }
     }
+
+        //Al realizar el pedido se insertan los puntos en el usuario
+        public static function updatePuntos($user_id) {
+
+            // Conexion con la basse de datos
+            $conexion = DataBase::connect();
+            
+            $user_ide = $user_id;
     
+            // Preparamos la consulta para actualizar los puntos del usuario actual
+            $stmt = $conexion->prepare("UPDATE usuarios SET puntos = 0 WHERE user_id = ?");
+            $stmt->bind_param("i", $user_ide);
+    
+            $exito = $stmt->execute();
+            $stmt->close();
+            return $exito;
+        }
 }

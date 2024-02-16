@@ -1,12 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Obtén todos los elementos de radio en un NodeList
-  var radios = document.querySelectorAll('input[name="miRadio"]');
-  var propinaMultiplicador = 0.03; //DEFAULT 3%
+  let radios = document.querySelectorAll('input[name="miRadio"]');
+  let propinaMultiplicador = 0.03; //DEFAULT 3%
+  // Obtén el precio total desde el input con clase 'precioTotal'
+  let precioTotalJS = parseFloat(document.querySelector('.precioTotalVista').value);
+
+  // Calcula el valor de propina
+  let propina = precioTotalJS * propinaMultiplicador;
+
+  // Muestra el valor de la propina en algún lugar (como un div con clase 'precioPropina')
+  let propinaElemento = document.querySelector('.precioPropinaVista');
+  propinaElemento.textContent = propina.toFixed(2) + "€";
 
   // Itera sobre los radios y agrega un event listener a cada uno
   radios.forEach(function(radio) {
     radio.addEventListener('change', function() {
-      // Dependiendo de qué opción de radio se seleccionó, actualiza el valor de la variable JavaScript
+      // Dependiendo de qué opción de radio se seleccionó, actualiza el valor de la letiable JavaScript
       switch(this.value) {
         case "propina0":
           propinaMultiplicador = 0.00;
@@ -25,17 +34,16 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       // Obtén el precio total desde el input con clase 'precioTotal'
-      var precioTotalJS = parseFloat(document.querySelector('.precioTotalVista').value);
+      let precioTotalJS = parseFloat(document.querySelector('.precioTotalVista').value);
 
       // Calcula el valor de propina
-      var propina = precioTotalJS * propinaMultiplicador;
+      let propina = precioTotalJS * propinaMultiplicador;
 
       // Muestra el valor de la propina en algún lugar (como un div con clase 'precioPropina')
-      var propinaElemento = document.querySelector('.precioPropinaVista');
+      let propinaElemento = document.querySelector('.precioPropinaVista');
       propinaElemento.textContent = propina.toFixed(2) + "€";
 
       // Envía el valor de la propina al servidor
-      // enviarPropinaAlServidor(propina);
       console.log(propina);
       {
         const cuerpoSolicitud = { propina: propina };

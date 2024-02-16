@@ -83,17 +83,26 @@
                 <label for="radio0">Nada</label><br>
 
                 <input type="radio" id="radio1" name="miRadio" value="propina3" checked> <!-- Seleccionado por defecto CHECKED -->
-                <label for="radio1">3</label><br>
+                <label for="radio1">3%</label><br>
 
                 <input type="radio" id="radio2" name="miRadio" value="propina5">
-                <label for="radio2">5</label><br>
+                <label for="radio2">5%</label><br>
 
                 <input type="radio" id="radio3" name="miRadio" value="propina10">
-                <label for="radio3">10</label><br>
+                <label for="radio3">10%</label><br>
+                <?php
+                if (!isset($_SESSION['user'])) { ?>
                 <p class="puntosVista"></p>
-
+                <p>100 puntos = 10€ descuento</p>
                 <input type="checkbox" id="checkbox" name="checkbox">
                 <label for="checkbox" id="mostrarPuntos"></label>
+                <?php
+                } else {
+                ?> 
+                <p>Inicia sesión para finalizar el pedido.</p>
+                <?php
+                }
+                ?> 
 
                 <button type="submit" name="precio" id="finalizarbtn" class="fw-semibold btn-c btn-cart-tramitar">TRAMITAR PEDIDO (<?= count($_SESSION['addproducto']); ?> artículos)</button>
 
@@ -179,6 +188,7 @@
 
   <script src="assets/js/propina.js"></script>
   <script src="assets/js/puntos.js"></script>
+  <script src="assets/js/localStoragePedido.js"></script>
 </body>
 <!-------------------------------------------------------------------------------->
 

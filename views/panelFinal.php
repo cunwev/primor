@@ -13,6 +13,7 @@
   </header>
 
 <body>
+  <?php var_dump($_SESSION['checkboxPuntos'])?>
   <h2>Aquí está el resumen de tu pedido: </h2>
 <div id="qrCodeContainer"></div>
 
