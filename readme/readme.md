@@ -132,11 +132,88 @@ En este punto explicaré de forma breve como se ha realizado cada funcionalidad:
 	
 	(!) Todo esto lo llevamos a cestaController > finalizar().
 
+```
+	`let puntos = 0;`
+	`document.addEventListener('DOMContentLoaded', function () {`
+
+    `// Obtener el precio total del pedido`
+    `let precioTotalJS = parseFloat(document.querySelector('.precioTotalVista').value);`
+
+    `// Calcular los puntos`
+    `let puntos = Math.floor(precioTotalJS);`
+
+    `// Muestra el valor de la puntos en algún lugar (como un div con clase 'puntosVista')`
+    `let puntosElemento = document.querySelector('.puntosVista');`
+    `puntosElemento.textContent = "Finaliza el pedido y obtén " + puntos + " puntos.";`
+
+    `// Envía la cantidad de puntos al servidor`
+    `let cuerpoSolicitud = { puntos: puntos };`
+    `var parametrosFetch = {`
+        `method: 'POST',`
+        `headers: { 'Content-Type': 'application/json' },`
+        `body: JSON.stringify(cuerpoSolicitud)`
+    `};`
+
+    `// GUARDAR PUNTOS`
+    `fetch('http://localhost/primor/index.php?controller=api&action=guardarPuntos', parametrosFetch)`
+
+        `.then(response => {`
+            `if (!response.ok) {`
+                `throw new Error('La solicitud falló');`
+            `}`
+            `// Leer el cuerpo de la respuesta como JSON`
+        `})`
+        `.then(data => {`
+            `// Hacer algo con los datos (si los hay)`
+            `console.log('Respuesta del servidor:', data);`
+        `})`
+```
 #### Mostrar puntos
 
 	Recogemos los puntos de la base de datos del usuario ya que se le ha creado una columna especifica para los puntos de fidelidad. Si decide gastarlos se envia el descuento final en forma de variable de sesion al igual que en el apartado anterior.
 	Lo mostramos por pantalla en tiempo real en el panel de finalizar pedido.
-	
+
+```
+    // MOSTRAR PUNTOS
+    fetch('http://localhost/primor/index.php?controller=api&action=mostrarPuntos', parametrosFetch)
+
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('La solicitud falló');
+            }
+
+            // Leer el cuerpo de la respuesta como JSON
+            return response.json();
+        })
+
+        .then(data => {
+            puntos = data;
+
+            // Inicializamos la variable descuento
+            let descuento = 0;
+
+            // Calculamos el descuento basado en los puntos
+            descuento = Math.floor(puntos / 100) * 10;
+
+            //if (checkbox = true) {
+                if (puntos >= 100) {
+
+                    document.getElementById('mostrarPuntos').innerHTML = "Usar <b>" + puntos + "</b> de mis puntos para ahorrar <b>" + descuento + "</b>€.";
+
+                    if ((precioTotalJS - descuento) < 0) {
+                        document.getElementById('precioConDescuento').innerHTML = "Usa tus puntos y obtén tu pedido... <b>¡GRATIS!</b>";
+                    }
+
+                    if ((precioTotalJS - descuento) > 0) {
+                        precioConDescuento = (precioTotalJS - descuento).toFixed(2);
+                        document.getElementById('precioConDescuento').innerHTML = "¡Usa tus puntos y obtén tu pedido por: <b>" + precioConDescuento + "</b>€!";
+                    }
+                //}
+            } else {
+                document.getElementById('mostrarPuntos2').innerHTML = "No dispones de suficientes puntos (" + puntos + ") para realizar un descuento en este pedido.";
+            }
+        })
+```
 #### Gastar puntos
 
 	Aqui la regla de tres es la siguiente, cada 100 puntos gastados se aplican 10€ de descuento sobre el precio total, la condicion es que se gastan TODOS los puntos de golpe, por ejemplo: 300 puntos son 30€ de descuento, 380 puntos tambien son 30€ de descuento, me he basado en varios webs que utilizan este sistema, siempre incentivando a acumular y acumular.
@@ -144,6 +221,66 @@ En este punto explicaré de forma breve como se ha realizado cada funcionalidad:
 	
 	(!) Todo esto lo llevamos a cestaController > finalizar().
 	
+```
+	// GASTAR PUNTOS
+
+    let checkbox = false;
+    var parametrosFetch = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ checkbox: checkbox })
+    };
+
+    fetch('http://localhost/primor/index.php?controller=api&action=gastarPuntos', parametrosFetch)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('La solicitud falló');
+            }
+            // Leer el cuerpo de la respuesta como JSON
+            return response.json();
+        })
+        .then(data => {
+            // Hacer algo con los datos (si los hay)
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    document.getElementById("checkbox").addEventListener("change", function () {
+        checkbox = !checkbox;
+        console.log(checkbox);
+
+        var parametrosFetch = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ checkbox: checkbox })
+        };
+        
+        fetch('http://localhost/primor/index.php?controller=api&action=gastarPuntos', parametrosFetch)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La solicitud falló');
+                }
+                // Leer el cuerpo de la respuesta como JSON
+                return response.json();
+            })
+            .then(data => {
+                // Hacer algo con los datos (si los hay)
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    )
+
+});
+```
 ***Ahora todas las variables de sesión las utilizamos dentro de cestaController > finalizar(), es decir, cuando el usuario pulse el botón de finalizar compra realizará las operaciones pertinentes (UPDATE) sobre la columna "puntos" del usuario, siempre en base si este gasta puntos o los acumula. Al unificar tanto las variables en una sola función nos permite calcular de forma más rápida e incluso almacenar en pedido los puntos gastados y obtenidos en una compra.***
 
 	Cabe decir que si el usuario tiene menos de 100 puntos no podrá gastarlos, en caso de que el pedido le salga gratis, por ejemplo 200 puntos (20€) de descuento en un pedido de 10€ en la base de datos de pedidos el valor será 0.00€ pero nunca negativo. Tambien se le indicará que le ha salido gratis. No aparece nada de esta funcionalidad si el usuario no ha iniciado sesión.
@@ -156,10 +293,41 @@ En este punto explicaré de forma breve como se ha realizado cada funcionalidad:
 	
 	![[Pasted image 20240217112454.png]]
 
+```
+	                <p class="puntosVista"></p>
+                <?php
+                if (isset($_SESSION['user'])) {
+                  if ($_SESSION['puntosMostrar'] >= 99) { ?>
+                    <div class="containerPuntos">
+                        <input type="checkbox" id="checkbox" name="checkbox">
+                        <label for="checkbox" id="mostrarPuntos"></label>
+                    </div>
+                    <p style="font-size: 12px; font-style:italic">* 100 puntos = 10€ descuento</p>
+                    <!-- <p id="mostrarPuntos"></p> -->
+                    <p id="precioConDescuento"></p>
+                <?php
+                  }
+                }
+                ?>
+```
+
 ### QR
 
 	Recogemos el contenido del pedido de la cesta, y al finalizar la compra este se nos muestra en formato QR para que el usuario pueda consultar su ultimo pedido.
 	Para ello lo almacenamos en localStorage y se lo pasamos a la API, que se encargará de descodificarlo, formatear el array para finalmente ser monstrado en formato QR desde panelFinal.
+
+
+```
+`let url = https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(localStorage.getItem('contenidoPedido'))};`
+
+`// Crear elemento img directamente`
+
+`const imgElement = document.createElement('img');`
+
+`imgElement.src = url;`
+
+`document.getElementById('qrCodeContainer').appendChild(imgElement);`
+```
 	
 	![[Pasted image 20240217112549.png]]
 ### Propinas
@@ -172,12 +340,122 @@ En este punto explicaré de forma breve como se ha realizado cada funcionalidad:
 
 	Ya todo calculado al finalizar pedido se almacena en sus columnas respectivas dentro del pedido en la BBDD, precio+propina y propina.
 
+```
+	document.addEventListener('DOMContentLoaded', function() {
 
-### Filtro de productos
+  // Obtén todos los elementos de radio en un NodeList
+  let radios = document.querySelectorAll('input[name="miRadio"]');
+  let propinaMultiplicador = 0.03; //DEFAULT 3%
+
+  // Obtén el precio total desde el input con clase 'precioTotal'
+  let precioTotalJS = parseFloat(document.querySelector('.precioTotalVista').value);
+
+  // Calcula el valor de propina
+  let propina = precioTotalJS * propinaMultiplicador;
+
+  // Muestra el valor de la propina en algún lugar (como un div con clase 'precioPropina')
+  let propinaElemento = document.querySelector('.precioPropinaVista');
+  propinaElemento.textContent = "La propina aplicada es de: " + propina.toFixed(2) + "€";
+
+  // Itera sobre los radios y agrega un event listener a cada uno
+  radios.forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      // Dependiendo de qué opción de radio se seleccionó, actualiza el valor de la letiable JavaScript
+      switch(this.value) {
+        case "propina0":
+          propinaMultiplicador = 0.00;
+          break;
+        case "propina3":
+          propinaMultiplicador = 0.03; //CHECKED
+          break;
+        case "propina5":
+          propinaMultiplicador = 0.05;
+          break;
+        case "propina10":
+          propinaMultiplicador = 0.10;
+          break;
+        default:
+          propinaMultiplicador = 0.03; // Valor predeterminado si no se selecciona ninguna opción válida
+      }
+      
+      // Obtén el precio total desde el input con clase 'precioTotal'
+      let precioTotalJS = parseFloat(document.querySelector('.precioTotalVista').value);
+      
+      // Calcula el valor de propina
+      let propina = precioTotalJS * propinaMultiplicador;
+      
+      // Muestra el valor de la propina en algún lugar (como un div con clase 'precioPropina')
+      let propinaElemento = document.querySelector('.precioPropinaVista');
+      propinaElemento.textContent = "La propina aplicada es de: " + propina.toFixed(2) + "€";
+      {
+        const cuerpoSolicitud = { propina: propina };
+        const parametrosFetch = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(cuerpoSolicitud)
+        };
+        
+        fetch('http://localhost/primor/index.php?controller=api&action=guardarPropina', parametrosFetch)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('La solicitud falló');
+            }
+            
+            // Leer el cuerpo de la respuesta como JSON
+            return response.json();
+          })
+          .then(data => {
+            // Hacer algo con los datos (si los hay)
+            console.log('Respuesta del servidor:', data);
+          })
+          .catch(error => {
+            // Manejar errores
+            console.error('Error al enviar la propina al servidor:', error.message);
+          });
+      }
+    });
+  });
+});
+```
+
+
+### Filtro de productos/categorías
 
 	En este apartado la API recoge el valor del desplegable, y lo relaciona con el del div que contenga X categoria, pues este lo muestra y el resto lo oculta mediante Display: none.
 
 	Ya que la parte de filtrar especificamente lo he hecho en las estrellas de las valoraciones aqui le he dado un enfoque diferente ya que mi web dispone de categorias en bloque y no de productos individuales pertenecientes a categorias.
+
+```
+		    `// Script para filtrar las categorías`
+    `document.addEventListener("DOMContentLoaded", function () {`
+
+        `// Manejador de cambio en el formulario de selección`
+        `document.getElementById("categoryFilterForm").addEventListener("change", function () {`
+
+            `// Obtener el valor seleccionado`
+            `console.log("Categoría seleccionada:", this.elements["categoryFilter"].value);`
+            `let selectedCategory = this.elements["categoryFilter"].value;`
+
+            `// Ocultar todos los contenedores de productos`
+            `document.querySelectorAll('.categoria-container').forEach(function (container) {`
+                `container.style.display = 'none';`
+            `});`
+
+            `// Mostrar solo el contenedor de la categoría seleccionada`
+            `if (selectedCategory !== 'all') {`
+                `document.querySelector('.' + selectedCategory).style.display = 'block';`
+
+            `} else {`
+
+                `// Si se selecciona "Todas", mostrar todos los contenedores`
+                `document.querySelectorAll('.categoria-container').forEach(function (container) {`
+                    `container.style.display = 'block';`
+
+                `});`
+            `}`
+        `});`
+    `});`
+```
 
 	![[Pasted image 20240217115402.png]]
 	

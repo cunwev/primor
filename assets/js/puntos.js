@@ -2,17 +2,17 @@ let puntos = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
     // Obtener el precio total del pedido
-    var precioTotalJS = parseFloat(document.querySelector('.precioTotalVista').value);
+    let precioTotalJS = parseFloat(document.querySelector('.precioTotalVista').value);
 
     // Calcular los puntos
-    var puntos = Math.floor(precioTotalJS);
+    let puntos = Math.floor(precioTotalJS);
 
     // Muestra el valor de la puntos en algún lugar (como un div con clase 'puntosVista')
-    var puntosElemento = document.querySelector('.puntosVista');
+    let puntosElemento = document.querySelector('.puntosVista');
     puntosElemento.textContent = "Finaliza el pedido y obtén " + puntos + " puntos.";
 
     // Envía la cantidad de puntos al servidor
-    var cuerpoSolicitud = { puntos: puntos };
+    let cuerpoSolicitud = { puntos: puntos };
     var parametrosFetch = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

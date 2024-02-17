@@ -4,7 +4,7 @@
         document.getElementById("categoryFilterForm").addEventListener("change", function () {
             // Obtener el valor seleccionado
             console.log("Categoría seleccionada:", this.elements["categoryFilter"].value);
-            var selectedCategory = this.elements["categoryFilter"].value;
+            let selectedCategory = this.elements["categoryFilter"].value;
     
             // Ocultar todos los contenedores de productos
             document.querySelectorAll('.categoria-container').forEach(function (container) {
