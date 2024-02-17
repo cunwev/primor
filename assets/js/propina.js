@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Muestra el valor de la propina en algún lugar (como un div con clase 'precioPropina')
   let propinaElemento = document.querySelector('.precioPropinaVista');
-  propinaElemento.textContent = propina.toFixed(2) + "€";
+  propinaElemento.textContent = "La propina aplicada es de: " + propina.toFixed(2) + "€";
 
   // Itera sobre los radios y agrega un event listener a cada uno
   radios.forEach(function(radio) {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Muestra el valor de la propina en algún lugar (como un div con clase 'precioPropina')
       let propinaElemento = document.querySelector('.precioPropinaVista');
-      propinaElemento.textContent = propina.toFixed(2) + "€";
+      propinaElemento.textContent = "La propina aplicada es de: " + propina.toFixed(2) + "€";
 
       // Envía el valor de la propina al servidor
       console.log(propina);

@@ -13,9 +13,9 @@
   </header>
 
 <body>
-  <?php var_dump($_SESSION['checkboxPuntos'])?>
   <h2>Aquí está el resumen de tu pedido: </h2>
-<div id="qrCodeContainer"></div>
+  <!-- <p class="puntosVista"></p> -->
+  <div id="qrCodeContainer"></div>
 
 <script src="assets/js/qr.js"></script>
 </body>

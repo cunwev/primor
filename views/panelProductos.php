@@ -11,21 +11,21 @@
 </header>
 
 <body>
-    
-<div class="text-center my-5">
-<form id="categoryFilterForm">
-<h2 class="carta-title">Filtrar por Categoría</h2>
-    <label for="categoryFilter">Selecciona una categoría:</label>
-    <select id="categoryFilter" name="categoryFilter">
-        <option value="all">Todas</option>
-        <option value="tendencias">Tendencias</option>
-        <option value="mer_a_versailles">Mer À Versailles</option>
-        <option value="ecresant_des_feuilles">Ecresant Des Feuilles</option>
-    </select>
-</form>
-</div>
 
-        <div class="categoria-container tendencias container-xl">
+    <div class="text-left mx-5 my-4 position-absolute">
+        <h2 class="page-title">Nuestra carta</h2>
+        <form id="categoryFilterForm">
+            <label class="label-text-login w-100">Filtrar por categoria</label>
+            <select id="categoryFilter" name="categoryFilter">
+                <option value="all">Todas</option>
+                <option value="tendencias">Tendencias</option>
+                <option value="mer_a_versailles">Mer À Versailles</option>
+                <option value="ecresant_des_feuilles">Ecresant Des Feuilles</option>
+            </select>
+        </form>
+    </div>
+    <br>
+    <div class="categoria-container tendencias container-xl">
         <div class="text-center my-5">
             <h2 class="carta-title">TENDENCIAS</h2>
             <p>Una exquisita colección de los platos que están en boca de todos.<br>Conoce las últimas tendencias gatronómicas.</p>
@@ -158,5 +158,6 @@
 </body>
 
 
-    <?php include_once "views/footer.php" ?>
+<?php include_once "views/footer.php" ?>
+
 </html>

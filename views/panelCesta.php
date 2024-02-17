@@ -4,6 +4,43 @@
 <head>
   <title>Primor - CESTA</title>
   <?php include_once "views/meta.php" ?>
+  <style>
+        .radio-button {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-right: 8px;
+    }
+
+    .radio-button input[type="radio"] {
+        display: none;
+    }
+
+    .radio-button input[type="radio"]:checked + label {
+        color: black;
+        font-size: 18px;
+        font-weight: bold;
+        border-width: 2px;
+    }
+
+    .containerPuntos {
+        display: flex;
+        align-items: center; /* Para centrar verticalmente */
+    }
+
+    /* Estilo del checkbox */
+    #checkbox {
+        order: 1; /* Cambiar el orden del checkbox */
+        margin-right: 10px; /* Espacio entre el checkbox y el label */
+    }
+
+    /* Estilo del label */
+    #mostrarPuntos {
+        order: 2; /* Cambiar el orden del label */
+    }
+  </style>
 </head>
 
 <body>
@@ -73,37 +110,50 @@
               <?php } else { ?>
                 <form id="myForm" class="p-2" action="<?= url . '?controller=cesta&action=finalizar' ?>" method="post">
                 <?php } ?>
-                <input class="input-text-descuento" type="text" placeholder="Introducir código de descuento" />
-                <button type="submit" class="fw-semibold btn-a btn-cart-aplicar p-0">APLICAR</button>
+<hr>
                 <!-- precioTotalJS -->
                 <input class="precioTotalVista" type="hidden" name="precioFinal" value="<?= round(CalculadoraPrecios::calculadorPrecioPedido($_SESSION['addproducto']), 2) ?>">
                 <p class="precioPropinaVista"></p>
 
-                <input type="radio" id="radio0" name="miRadio" value="propina0">
-                <label for="radio0">Nada</label><br>
+              <div class="radio-button">
+                  <input type="radio" id="radio1" name="miRadio" value="propina3" checked> <!-- Seleccionado por defecto CHECKED -->
+                  <label for="radio1">3%</label>
+              </div>
 
-                <input type="radio" id="radio1" name="miRadio" value="propina3" checked> <!-- Seleccionado por defecto CHECKED -->
-                <label for="radio1">3%</label><br>
+              <div class="radio-button">
+                  <input type="radio" id="radio2" name="miRadio" value="propina5">
+                  <label for="radio2">5%</label>
+              </div>
 
-                <input type="radio" id="radio2" name="miRadio" value="propina5">
-                <label for="radio2">5%</label><br>
+              <div class="radio-button">
+                  <input type="radio" id="radio3" name="miRadio" value="propina10">
+                  <label for="radio3">10%</label>
+              </div>
 
-                <input type="radio" id="radio3" name="miRadio" value="propina10">
-                <label for="radio3">10%</label><br>
-                <?php
-                if (!isset($_SESSION['user'])) { ?>
+              <div class="radio-button">
+                  <input type="radio" id="radio0" name="miRadio" value="propina0">
+                  <label for="radio0">Nada</label>
+              </div>
+
+                <hr>
                 <p class="puntosVista"></p>
-                <p>100 puntos = 10€ descuento</p>
-                <input type="checkbox" id="checkbox" name="checkbox">
-                <label for="checkbox" id="mostrarPuntos"></label>
                 <?php
-                } else {
-                ?> 
-                <p>Inicia sesión para finalizar el pedido.</p>
-                <?php
+                if (isset($_SESSION['user'])) { 
+                  if ($_SESSION['puntosMostrar'] >= 99) { ?>
+                    <div class="containerPuntos">
+                        <input type="checkbox" id="checkbox" name="checkbox">
+                        <label for="checkbox" id="mostrarPuntos">Mostrar puntos</label>
+                    </div>
+                    <p style="font-size: 12px; font-style:italic">* 100 puntos = 10€ descuento</p>
+                    <!-- <p id="mostrarPuntos"></p> -->
+                    <p id="precioConDescuento"></p>
+                <?php 
+                  }
                 }
-                ?> 
+                ?>
 
+                <input class="input-text-descuento mt-4" type="text" placeholder="Introducir código de descuento" />
+                <button type="submit" class="fw-semibold btn-a btn-cart-aplicar p-0">APLICAR</button>
                 <button type="submit" name="precio" id="finalizarbtn" class="fw-semibold btn-c btn-cart-tramitar">TRAMITAR PEDIDO (<?= count($_SESSION['addproducto']); ?> artículos)</button>
 
 

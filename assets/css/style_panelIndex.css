@@ -117,3 +117,48 @@
     border-bottom: 1px solid #FF2121;
 }
 
+.rating {
+    display: flex;
+  }
+
+  .rating input {
+    display: none;
+  }
+
+  .rating label {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background-image: url('../../assets/icons/estrella_no.svg') !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .rating input:checked~label {
+    background-image: url('../../assets/icons/estrella_si.svg') !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* Estilo para la ventana con scroll */
+  .ventana-scroll {
+    height: 200px;
+    overflow-y: auto;
+    /* Cambiado de scroll a auto */
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  /* Ocultar la barra de desplazamiento en navegadores webkit (como Chrome y Safari) */
+  .ventana-scroll::-webkit-scrollbar {
+    width: 0;
+    /* Ancho de la barra de desplazamiento a cero */
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }

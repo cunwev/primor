@@ -19,7 +19,7 @@ Class CalculadoraPrecios{
 
         $precioTotal = $subTotal + ($subTotal * $propinaSeleccionada);
 
-        $_SESSION['precioTotalPedido'] = $precioTotal;
+        $_SESSION['precioTotalPedido'] = $precioTotal + $_SESSION['propina'] ;
 
         return $precioTotal;
 

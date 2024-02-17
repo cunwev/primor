@@ -4,7 +4,7 @@
 <head>
   <title>Primor</title>
   <?php include_once "views/meta.php" ?>
-  <style>
+  <!-- <style>
     .rating {
       display: flex;
     }
@@ -50,7 +50,7 @@
       display: block;
       margin-bottom: 5px;
     }
-  </style>
+  </style> -->
 </head>
 
 <body>
@@ -58,102 +58,6 @@
   <header>
     <?php include_once "views/header.php" ?>
   </header>
-
-
-  <div class="container-xl mx-52 p-0 mt-5 mb-4 margin-mode-off">
-    <h2 class="page-title">Deja tu reseña</h2>
-    <!-- Botones para ordenar -->
-    <button id="ordenarAscendente">Ordenar Ascendente</button>
-    <button id="ordenarDescendente">Ordenar Descendente</button>
-    <label>
-        <input type="checkbox" id="filtro-5" name="estrella" value="5" >
-        5 Estrellas
-    </label>
-    <label>
-        <input type="checkbox" id="filtro-4" name="estrella" value="4" >
-        4 Estrellas
-    </label>
-    <label>
-        <input type="checkbox" id="filtro-3" name="estrella" value="3" >
-        3 Estrellas
-    </label>
-    <label>
-        <input type="checkbox" id="filtro-2" name="estrella" value="2" >
-        2 Estrellas
-    </label>
-    <label>
-        <input type="checkbox" id="filtro-1" name="estrella" value="1" >
-        1 Estrella
-    </label>
-
-    <div class="row m-0 p-0">
-      <div class="col-md-8 m-0 p-0">
-        <div class="mgright mgreset mgbottom" style="height: 450px">
-          <div class="ventana-scroll" style="height: 100%">
-            <!-- Contenido de la ventana con scroll -->
-            <section id="containerReview">
-
-            </section>
-          </div>
-        </div>
-      </div>
-
-      <script>
-        // Función para actualizar las reseñas según los checkboxes seleccionados
-        function actualizarFiltro() {
-          // Obtén todos los checkboxes
-          var checkboxes = document.querySelectorAll('.filtro');
-
-          // Filtra las reseñas según los checkboxes seleccionados
-          checkboxes.forEach(function(checkbox) {
-            var estrellas = checkbox.id.split('-')[1];
-            var reseñas = document.querySelectorAll('.reseña[data-estrellas="' + estrellas + '"]');
-
-            reseñas.forEach(function(reseña) {
-              reseña.style.display = checkbox.checked ? 'block' : 'none';
-            });
-          });
-        }
-
-        // Agrega un event listener a cada checkbox
-        document.querySelectorAll('.filtro').forEach(function(checkbox) {
-          checkbox.addEventListener('change', actualizarFiltro);
-        });
-      </script>
-
-      <div class="col-md-4 m-0 p-0">
-        <div class="mgleft mgreset p-2" style="height: 400px !important;">
-          <form id="resenaForm">
-            <label class="label-text-login w-100">Título *</label>
-            <input id="titulo" type="text" placeholder="Introduce un título" maxlength="45" style="width:100%;" required>
-            <br><br>
-            <label class="label-text-login w-100">Comentario *</label>
-            <textarea id="comentario" placeholder="Introduce aquí tu reseña" cols="6" rows="1" maxlength="300" style="resize: none; width:100%; height:50%;" required></textarea>
-            <br><br>
-            <label class="label-text-login w-100">Valoración *</label>
-            <div class="rating d-flex flex-row-reverse justify-content-end">
-              <input type="radio" id="estrella5" name="valoracion" value="5">
-              <label for="estrella5"></label>
-              <input type="radio" id="estrella4" name="valoracion" value="4">
-              <label for="estrella4"></label>
-              <input type="radio" id="estrella3" name="valoracion" value="3">
-              <label for="estrella3"></label>
-              <input type="radio" id="estrella2" name="valoracion" value="2">
-              <label for="estrella2"></label>
-              <input type="radio" id="estrella1" name="valoracion" value="1" checked>
-              <label for="estrella1"></label>
-            </div>
-            <br>
-            <?php if (isset($_SESSION['user'])) { ?>
-            <button class="fw-semibold w-100 btn-login" type="button" id="boton_comentario">Agrega tu comentario!</button>
-            <?php } else { ?>
-              <button class="fw-semibold w-100 btn-login">Inicia sesión para agregar un comentario</button>
-            <?php } ?>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!----------------------------------------------------------------------------------------------------->
 
@@ -249,9 +153,9 @@
 
     </div>
   </div>
-
+<br>
   <!---------------------------------------------------------------------------------------------------------------------------------------------->
-
+<section class="my-5 py-5">
   <div class="bg-black my-5">
     <div class="container-xl mx-52 bg-black" style="padding: 40px 0px 40px 0px">
       <div class="row p-0 reverse d-flex justify-content-between " style="margin: 0px 0px 40px 0px;">
@@ -284,6 +188,91 @@
     </div>
   </div>
 
+  <div class="container-xl mx-52 p-0 mt-5 mb-4 margin-mode-off">
+    <h2 class="page-title">Deja tu reseña</h2>
+    <!-- Botones para ordenar -->
+    <div class="container">
+  <div class="row mt-3">
+    <div class="col p-0">
+      <form>
+      <div class="form-check form-check-inline m-0 p-1">
+        <button id="ascendente" type="button" class="btn-a p-1">↓ Ascendente</button>
+        </div>
+        <div class="form-check form-check-inline m-0 p-1">
+        <button id="descendente" type="button" class="btn-a p-1">↑ Descendente</button>
+        </div>
+        <div class="form-check form-check-inline mr-1">
+          <input class="form-check-input" type="checkbox" id="filtro-5" name="estrella" value="5">
+          <label class="form-check-label" for="filtro-5">5 Estrellas</label>
+        </div>
+        <div class="form-check form-check-inline mr-1">
+          <input class="form-check-input" type="checkbox" id="filtro-4" name="estrella" value="4">
+          <label class="form-check-label" for="filtro-4">4 Estrellas</label>
+        </div>
+        <div class="form-check form-check-inline mr-1">
+          <input class="form-check-input" type="checkbox" id="filtro-3" name="estrella" value="3">
+          <label class="form-check-label" for="filtro-3">3 Estrellas</label>
+        </div>
+        <div class="form-check form-check-inline mr-1">
+          <input class="form-check-input" type="checkbox" id="filtro-2" name="estrella" value="2">
+          <label class="form-check-label" for="filtro-2">2 Estrellas</label>
+        </div>
+        <div class="form-check form-check-inline mr-1">
+          <input class="form-check-input" type="checkbox" id="filtro-1" name="estrella" value="1">
+          <label class="form-check-label" for="filtro-1">1 Estrella</label>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+  <!---------------------------------------------------------------------------------------------------------------------------------------------->
+    <div class="row m-0 p-0">
+      <div class="col-md-8 m-0 p-0">
+        <div class="mgright mgreset mgbottom" style="height: 450px">
+          <div class="ventana-scroll" style="height: 100%">
+            <!-- Contenido de la ventana con scroll -->
+            <section id="containerReview">
+
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 m-0 p-0">
+        <div class="mgleft mgreset p-2" style="height: 400px !important;">
+          <form class="m-0" id="resenaForm">
+            <label class="label-text-login w-100">Título *</label>
+            <input id="titulo" type="text" placeholder="Introduce un título" maxlength="45" style="width:100%;" required>
+            <br><br>
+            <label class="label-text-login w-100">Comentario *</label>
+            <textarea id="comentario" placeholder="Introduce aquí tu reseña" cols="6" rows="1" maxlength="300" style="resize: none; width:100%; height:50%;" required></textarea>
+            <br><br>
+            <label class="label-text-login w-100">Valoración *</label>
+            <div class="rating d-flex flex-row-reverse justify-content-end">
+              <input type="radio" id="estrella5" name="valoracion" value="5">
+              <label for="estrella5"></label>
+              <input type="radio" id="estrella4" name="valoracion" value="4">
+              <label for="estrella4"></label>
+              <input type="radio" id="estrella3" name="valoracion" value="3">
+              <label for="estrella3"></label>
+              <input type="radio" id="estrella2" name="valoracion" value="2">
+              <label for="estrella2"></label>
+              <input type="radio" id="estrella1" name="valoracion" value="1" checked>
+              <label for="estrella1"></label>
+            </div>
+            <br>
+            </form>
+            <?php if (isset($_SESSION['user'])) { ?>
+            <button class="fw-semibold w-100 btn-login" type="button" id="boton_comentario">Envía tu comentario</button>
+            </form>
+            <?php } else { ?>
+              <button class="fw-semibold w-100 btn-login" onclick="window.location.href='http://localhost/PRIMOR/index.php?controller=user&action=login'">Inicia sesión para agregar un comentario</button>
+            <?php } ?>
+        </div>
+      </div>
+    </div>
+  </div>
+            </section>
   <!---------------------------------------------------------------------------------------------------------------------------------------------->
   <div class="container-xl">
     <div class="row justify-content-between mx-3">
