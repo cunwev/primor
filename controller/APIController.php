@@ -1,13 +1,4 @@
 <?php
-//session_start();  Iniciamos la sesión si no se ha iniciado aún, quiza se pueda eliminar mas adelante.
-//Esto es un NUEVO CONTROLADOR
-//hacer todas las configuraciones necesarias para que funcione como controlador
-
-/** IMPORTANTE**/
-//Cargar Modelos necesarios BBDD
-
-/** IMPORTANTE**/
-//Instala la extensión Thunder Client en VSC. Te permite probar si tu API funciona correctamente.
 
 include_once 'model/ComentarioDAO.php';
 class APIController{    

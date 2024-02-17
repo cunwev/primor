@@ -142,7 +142,7 @@
                   if ($_SESSION['puntosMostrar'] >= 99) { ?>
                     <div class="containerPuntos">
                         <input type="checkbox" id="checkbox" name="checkbox">
-                        <label for="checkbox" id="mostrarPuntos">Mostrar puntos</label>
+                        <label for="checkbox" id="mostrarPuntos"></label>
                     </div>
                     <p style="font-size: 12px; font-style:italic">* 100 puntos = 10€ descuento</p>
                     <!-- <p id="mostrarPuntos"></p> -->

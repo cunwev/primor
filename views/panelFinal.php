@@ -12,7 +12,7 @@
     <?php include_once "views/header.php";?>
   </header>
 
-<body>
+<body >
   <h2>Aquí está el resumen de tu pedido: </h2>
   <!-- <p class="puntosVista"></p> -->
   <div id="qrCodeContainer"></div>
